@@ -67,19 +67,6 @@ public class EstoqueProdutoMongoGateway implements CrudEstoqueProdutoGateway {
     }
 
     @Override
-    public List<EstoqueProduto> findAll() {
-        try {
-            return repository.findAll()
-                    .stream()
-                    .map(EstoqueProdutoMapper::mapToDomain)
-                    .toList();
-        } catch (Exception e) {
-//            log.error("Falha ao listar produtos.", e);
-            throw new EstoqueProdutoMongoError.EstoqueProdutoPersistenceException("Erro ao acessar o banco de dados.", e);
-        }
-    }
-
-    @Override
     public EstoqueProduto save(EstoqueProduto produto) {
         if (produto == null) {
             throw new EstoqueProdutoMongoError.EstoqueProdutoInvalidArgumentException("O produto não pode ser nulo.");

@@ -36,15 +36,6 @@ public class GlobalExceptionHandler {
                 .body(createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), request));
     }
 
-    // 404 - EstoqueProduto não encontrado
-    @ExceptionHandler(EstoqueProdutoMongoError.EstoqueProdutoNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Object> handleEstoqueProdutoNotFound(EstoqueProdutoMongoError.EstoqueProdutoNotFoundException ex, WebRequest request) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), request));
-    }
-
     // 409 - EstoqueProduto já existe
     @ExceptionHandler(EstoqueProdutoError.EstoqueProdutoAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)

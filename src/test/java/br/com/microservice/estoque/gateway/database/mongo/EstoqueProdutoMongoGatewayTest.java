@@ -232,4 +232,46 @@ class EstoqueProdutoMongoGatewayTest {
                 () -> gateway.deleteById(UUID.randomUUID().toString())
         );
     }
+
+    @Test
+    void findBySkuEmpty() {
+        Mockito.when(repository.findBySku(Mockito.any(String.class)))
+                .thenReturn(Optional.empty());
+        var result = gateway.findBySku("SKU_NOT_FOUND");
+        Assertions.assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void findBySkuBlank() {
+        Assertions.assertThrows(
+                EstoqueProdutoMongoError.EstoqueProdutoInvalidArgumentException.class,
+                () -> gateway.findBySku(" ")
+        );
+    }
+
+    @Test
+    void findByIdEmpty() {
+        Mockito.when(repository.findById(Mockito.any(String.class)))
+                .thenReturn(Optional.empty());
+        var result = gateway.findById("ID_NOT_FOUND");
+        Assertions.assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void findByIdBlank() {
+        Assertions.assertThrows(
+                EstoqueProdutoMongoError.EstoqueProdutoInvalidArgumentException.class,
+                () -> gateway.findById(" ")
+        );
+    }
+
+    @Test
+    void deleteByIdNotExists() {
+        String id = UUID.randomUUID().toString();
+        Mockito.when(repository.existsById(id)).thenReturn(false);
+        Assertions.assertThrows(
+                EstoqueProdutoMongoError.EstoqueProdutoNotFoundException.class,
+                () -> gateway.deleteById(id)
+        );
+    }
 }
