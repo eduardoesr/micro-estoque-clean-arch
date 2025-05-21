@@ -1,6 +1,7 @@
 package br.com.microservice.estoque.controller;
 
 import br.com.microservice.estoque.dto.EstoqueProdutoDTO;
+import br.com.microservice.estoque.dto.rest_controller.InputAdicionarEstoqueProdutoDTO;
 import br.com.microservice.estoque.dto.rest_controller.InputReduzirEstoqueProdutoDTO;
 import br.com.microservice.estoque.dto.rest_controller.InputUpdateEstoqueProdutoDTO;
 import br.com.microservice.estoque.dto.usecase.UpdateEstoqueProdutoDTO;
@@ -43,5 +44,13 @@ public class UpdateEstoqueProdutoController {
     )
     public ResponseEntity<List<EstoqueProdutoDTO>> reduzir(@Valid @RequestBody InputReduzirEstoqueProdutoDTO input){
         return ResponseEntity.ok(useCase.reduzir(input));
+    }
+
+    @PutMapping("/adicionar")
+    @Operation(
+            summary = "Reduz estoque de um produto"
+    )
+    public ResponseEntity<List<EstoqueProdutoDTO>> adicionar(@Valid @RequestBody InputAdicionarEstoqueProdutoDTO input){
+        return ResponseEntity.ok(useCase.adicionar(input));
     }
 }

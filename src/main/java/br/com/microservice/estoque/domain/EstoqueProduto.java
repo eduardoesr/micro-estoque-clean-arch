@@ -67,7 +67,7 @@ public class EstoqueProduto {
     }
 
     public void setSku(String sku) {
-        this.sku = sku;
+        this.sku = validaSku(sku);
     }
 
     public Integer getQuantidade() {
@@ -75,6 +75,6 @@ public class EstoqueProduto {
     }
 
     public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
+        this.quantidade = validaQuantidade(quantidade);
     }
 }
