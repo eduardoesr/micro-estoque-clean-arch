@@ -1,4 +1,4 @@
-# Microsserviço de Estoque - Documentação
+# Tech Challenge 04 - Estoque
 
 ## Introdução
 
@@ -45,91 +45,83 @@ A entidade principal no banco de dados é `EstoqueProduto`.
 | `sku`      | Código SKU único do produto.               |
 | `quantidade` | Quantidade atual do produto em estoque.    |
 
-## Endpoints da API
+***
 
-### Estoque
-
-| Método | URL                                 | Ação                                               | Exemplo de Corpo de Requisição                                                                                                                                                                                                                                                                                                                                                                                             | Exemplo de Corpo de Resposta                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-|--------|-------------------------------------|----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `POST`   | `/create-estoque-produto`           | Cria uma nova entrada de estoque de produto. | ` json { "sku": "EX-SKU-123", "quantidade": 100 }  ` | \`\`\`json
+### Cadastrar estoque `POST /create-estoque-produto`
+```
 {
-"id": "60d0fe4f9e1e2d0015b0c1c3",
-"sku": "EX-SKU-123",
-"quantidade": 100
+    "sku": "EX-SKU-123",
+    "quantidade": 100
 }
+```
 
-| `DELETE` | `/delete-estoque-produto/{id}`      | Deleta um estoque de produto pelo seu ID. | `(Sem Corpo de Requisição)`  | `(Sem Conteúdo)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| `GET`    | `/estoque-produto`                  | Lista todos os estoques de produto com paginação. | `(Sem Corpo de Requisição - usa parâmetros de consulta para page e size)`                                                                                                                                                                                                                                                                                                                                                       | ```json
-[
+### Apagar estoque `DELETE /delete-estoque-produto/{id}`
+
+### Obter estoque de produto específico `GET /estoque-produto/{id}`
+
+### Listar produtos do estoque `GET /estoque-produto`
+```
+{
+  "page": 0,
+  "size": 10
+}
+```
+
+### Abate a quantidade especificada do estoque dos produtos `PUT /update-estoque-produto`
+```
+{
+  "produtos": [
     {
-        "id": "60d0fe4f9e1e2d0015b0c1c3",
-        "sku": "MTP03BR/A",
-        "quantidade": 10
+      "sku": "EX-SKU-123",
+      "quantidade": 1000
     }
-]
-``` |
-| `GET`    | `/estoque-produto/{id}`             | Encontra um estoque de produto pelo seu ID. | `(Sem Corpo de Requisição)`                                                                                                                                                                                                                                                                                                                                                                                      | ```json
-{
-    "id": "60d0fe4f9e1e2d0015b0c1c3",
-    "sku": "MTP03BR/A",
-    "quantidade": 10
+  ]
 }
-``` |
-| `PUT`    | `/update-estoque-produto/{id}`      | Atualiza alguns dados de um estoque de produto pelo seu ID. | ```json
-{
-    "sku": "EX-SKU-123-NEW",
-    "quantidade": 120
-}
-``` | ```json
-{
-    "id": "60d0fe4f9e1e2d0015b0c1c3",
-    "sku": "EX-SKU-123-NEW",
-    "quantidade": 120
-}
-``` |
-| `PUT`    | `/update-estoque-produto`           | Reduz o estoque de um produto. | ```json
-{
-    "produtos": [
-        {
-            "sku": "MTP03BR/A",
-            "quantidade": 5
-        }
-    ]
-}
-``` | ```json
-[
-    {
-        "id": "60d0fe4f9e1e2d0015b0c1c3",
-        "sku": "MTP03BR/A",
-        "quantidade": 5
-    }
-]
-``` |
-| `PUT`    | `/update-estoque-produto/adicionar` | Adiciona estoque a um produto. | ```json
-{
-    "produtos": [
-        {
-            "sku": "EX-SKU-123",
-            "quantidade": 10
-        },
-        {
-            "sku": "EX-SKU-456",
-            "quantidade": 5
-        }
-    ]
-}
-``` | ```json
-[
-    {
-        "id": "60d0fe4f9e1e2d0015b0c1c3",
-        "sku": "MTP03BR/A",
-        "quantidade": 20
-    }
-]
-``` |
+```
 
-## Qualidade de Software
+### Atualizar estoque de um produto `PUT /update-estoque-produto/{id}`
+```
+{
+  "sku": "EX-SKU-123",
+  "quantidade": 1000
+}
+```
+
+### Adiciona a quantidade especificada do estoque dos produtos `PUT /update-estoque-produto/adicionar`
+```
+{
+  "produtos": [
+    {
+      "sku": "EX-SKU-123",
+      "quantidade": 1000
+    }
+  ]
+}
+```
+***
+
+## API
+
+### Produto
+
+| Método  | URL                            | Ação                                                        |
+|---------|--------------------------------|-------------------------------------------------------------|
+| POST    | /create-estoque-produto                | Cria um novo produto no estoque.                                       |
+| DELETE  | /delete-estoque-produto/{id}           | Apaga produto do estoque pelo ID.                                      |
+| GET     | /estoque-produto                       | Obtém todos os produtos do estoque.                                    |
+| GET     | /estoque-produto/{id}                  | Obter produto do estoque pelo ID.                                      |
+| PUT     | /update-estoque-produto                | Reduz essa quantidade dos produtos especificados                             |
+| PUT     | /update-estoque-produto/{id}                | Atualiza dados de estoque de um produto                             |
+| PUT     | /update-estoque-produto/adicionar                | Adiciona quantidade no estoque de um produto                             |
+
+***
+
+## Qualidade de software
 
 ### Testes
 
-A API foi submetida a testes, com o objetivo de alcançar mais de 80% de cobertura de código.
+Foi realizado testes na API, buscando alcançar mais de 80% de cobertura
+
+<div align="center">
+    <img src="src/main/resources/img/teste.png" width="1466px" height="268px">
+</div>
